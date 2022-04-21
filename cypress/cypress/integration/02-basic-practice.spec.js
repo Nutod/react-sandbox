@@ -5,7 +5,7 @@
 // describe blocks through nesting. The nesting causes a type of
 // structural behaviour which is cool btw
 
-xdescribe('Basic Practice', () => {
+describe('Basic Practice', () => {
   beforeEach(() => {
     // guess what, we can visit any page. This is essentially
     // controlling a browser with code. Pretty cool, huh!
@@ -22,13 +22,13 @@ xdescribe('Basic Practice', () => {
     it('should put a new item as the last item in the "Unpacked Items" list', () => {});
   });
 
-  describe('Filtering items', () => {
+  xdescribe('Filtering items', () => {
     it('should show items that match whatever is in the filter field', () => {});
 
     it('should hide items that do not match whatever is in the filter field', () => {});
   });
 
-  describe('Removing items', () => {
+  xdescribe('Removing items', () => {
     describe('Remove all', () => {
       it('should remove all of the items', () => {});
     });
@@ -40,13 +40,13 @@ xdescribe('Basic Practice', () => {
     });
   });
 
-  describe('Mark all as unpacked', () => {
+  xdescribe('Mark all as unpacked', () => {
     it('should empty out the "Packed" list', () => {});
 
     it('should empty have all of the items in the "Unpacked" list', () => {});
   });
 
-  describe('Mark individual item as packed', () => {
+  xdescribe('Mark individual item as packed', () => {
     it('should move an individual item from "Unpacked" to "Packed"', () => {});
   });
 });
