@@ -1,12 +1,20 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 
-describe('Basic Practice', () => {
+// as usual we have a set of blocks organized in
+// describe blocks through nesting. The nesting causes a type of
+// structural behaviour which is cool btw
+
+xdescribe('Basic Practice', () => {
   beforeEach(() => {
+    // guess what, we can visit any page. This is essentially
+    // controlling a browser with code. Pretty cool, huh!
     cy.visit('/jetsetter');
   });
 
   describe('Adding a new item', () => {
+    // how would the user interact with the page
+    // that's kind of like the way these tests work here
     it('should put a new item on the page after clicking on "Add Item"', () => {});
 
     it('should put a new item in the "Unpacked Items" list', () => {});
