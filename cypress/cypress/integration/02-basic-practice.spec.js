@@ -12,6 +12,8 @@ describe('Basic Practice', () => {
     cy.visit('/jetsetter');
   });
 
+  // essentially, invoking is the programmatic
+  // way to interact with elements on the page
   describe('Adding a new item', () => {
     // how would the user interact with the page
     // that's kind of like the way these tests work here
