@@ -5,6 +5,10 @@
 // describe blocks through nesting. The nesting causes a type of
 // structural behaviour which is cool btw
 
+// tasks may not necessarily be anything happening
+// inside the browser. Commands on the other hand are handy
+// functions so we don't have to repeat ourselves
+
 describe('Basic Practice', () => {
   beforeEach(() => {
     // guess what, we can visit any page. This is essentially
