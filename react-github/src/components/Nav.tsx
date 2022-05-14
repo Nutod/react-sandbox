@@ -2,6 +2,7 @@ import React from 'react'
 import { css } from 'linaria'
 import { Button } from '@geist-ui/core'
 import { NavLink } from 'react-router-dom'
+import { useThemeContext } from '../context/theme'
 
 const navigation = css`
   display: flex;
@@ -34,6 +35,8 @@ const activeStyle = ({
 // How about customizing the theme altogether?
 
 export default function Nav() {
+  const { toggleTheme } = useThemeContext()
+
   return (
     <nav className={navigation}>
       <ul>
@@ -48,7 +51,8 @@ export default function Nav() {
           </NavLink>
         </li>
       </ul>
-      <Button>Switch Theme</Button>
+
+      <Button onClick={toggleTheme}>Switch Theme</Button>
     </nav>
   )
 }

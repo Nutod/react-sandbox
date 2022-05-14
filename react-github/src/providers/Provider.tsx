@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
+import { ThemeContextProvider, useThemeContext } from '../context/theme'
 
 type ProviderProps = {
   children: React.ReactNode
@@ -8,9 +9,21 @@ type ProviderProps = {
 
 export default function Provider({ children }: ProviderProps) {
   return (
-    <GeistProvider>
+    <ThemeContextProvider defaultTheme="light">
+      <Router>
+        <ThemeProviders>{children}</ThemeProviders>
+      </Router>
+    </ThemeContextProvider>
+  )
+}
+
+function ThemeProviders({ children }: ProviderProps) {
+  const { theme } = useThemeContext()
+
+  return (
+    <GeistProvider themeType={theme}>
       <CssBaseline />
-      <Router>{children}</Router>
+      {children}
     </GeistProvider>
   )
 }
