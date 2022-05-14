@@ -9,17 +9,17 @@ import Battle from './components/Battle'
 const container = css`
   max-width: 950px;
   margin-inline: auto;
-  background: pink;
-  marginblockstart: 2rem;
+  margin-block-start: 2rem;
+
+  /* display: grid;
+  grid-template-rows: min-content 1fr min-content; */
 `
 
 function App() {
-  // I'd be looking into a container component here
   return (
     <div className={container}>
       <Nav />
 
-      {/* Routing */}
       <main>
         <Routes>
           <Route path="/" element={<Popular />} />
