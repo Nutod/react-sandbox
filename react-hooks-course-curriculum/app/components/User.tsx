@@ -12,6 +12,7 @@ export interface IUser {
   karma: number
   created: number
   about: string
+  submitted: string[]
 }
 
 export default function User() {
