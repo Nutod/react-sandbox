@@ -6,6 +6,7 @@ import { formatDate } from '../utils/helpers'
 import PostsList from './PostsList'
 import { useLocation } from 'react-router-dom'
 import { IPost } from './Post'
+import { useUserDataAndPosts } from '../hooks'
 
 export interface IUser {
   id: number
@@ -16,34 +17,10 @@ export interface IUser {
 }
 
 export default function User() {
-  const [user, setUser] = React.useState<IUser | null>(null)
-  const [loadingUser, setLoadingUser] = React.useState(true)
-  const [posts, setPosts] = React.useState<IPost[] | null>(null)
-  const [loadingPosts, setLoadingPosts] = React.useState(true)
-  const [error, setError] = React.useState(null)
   const { search } = useLocation()
-
-  React.useEffect(() => {
-    const { id } = queryString.parse(search) as { [id: string]: string }
-
-    fetchUser(id)
-      .then(user => {
-        setUser(user)
-        setLoadingUser(false)
-
-        return fetchPosts(user.submitted.slice(0, 30))
-      })
-      .then(posts => {
-        setPosts(posts)
-        setLoadingPosts(false)
-        setError(null)
-      })
-      .catch(({ message }) => {
-        setError(message)
-        setLoadingPosts(false)
-        setLoadingUser(false)
-      })
-  }, [])
+  const { id } = queryString.parse(search) as { [id: string]: string }
+  const { posts, user, error, isPostsLoading, isUserLoading } =
+    useUserDataAndPosts(id)
 
   if (error) {
     return <p className="center-text error">{error}</p>
@@ -53,7 +30,7 @@ export default function User() {
 
   return (
     <React.Fragment>
-      {loadingUser === true ? (
+      {isUserLoading === true ? (
         <Loading text="Fetching User" />
       ) : (
         <React.Fragment>
@@ -69,8 +46,8 @@ export default function User() {
           <p dangerouslySetInnerHTML={{ __html: user.about }} />
         </React.Fragment>
       )}
-      {loadingPosts === true ? (
-        loadingUser === false && <Loading text="Fetching posts" />
+      {isPostsLoading === true ? (
+        isUserLoading === false && <Loading text="Fetching posts" />
       ) : (
         <React.Fragment>
           <h2>Posts</h2>
