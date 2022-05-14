@@ -1,35 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { fetchMainPosts } from '../utils/api'
 import Loading from './Loading'
 import PostsList from './PostsList'
-import { IPost } from './Post'
+import { useFetchMainPosts } from '../hooks'
 
 export default function Posts({ type }: { type: 'new' | 'top' }) {
-  const [posts, setPosts] = React.useState<IPost[] | null>(null)
-  const [error, setError] = React.useState<string | null>(null)
-  const [loading, setLoading] = React.useState(true)
-
-  React.useEffect(() => {
-    handleFetch()
-  }, [type])
-
-  const handleFetch = () => {
-    setPosts(null)
-    setError(null)
-    setLoading(true)
-
-    fetchMainPosts(type)
-      .then(posts => {
-        setPosts(posts)
-        setLoading(false)
-        setError(null)
-      })
-      .catch(({ message }) => {
-        setError(message)
-        setLoading(false)
-      })
-  }
+  const { loading, error, posts } = useFetchMainPosts(type)
 
   if (loading === true) {
     return <Loading />
