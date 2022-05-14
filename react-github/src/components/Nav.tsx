@@ -26,11 +26,12 @@ const activeStyle = ({
   isActive,
 }: {
   isActive: boolean
-}): { color: 'green' | undefined } => ({
-  color: isActive ? 'green' : undefined,
+}): { color: string | undefined } => ({
+  color: isActive ? '#f81ce5' : undefined,
 })
 
 // TODO: Use polished somewhere here instead?
+// How about customizing the theme altogether?
 
 export default function Nav() {
   return (
