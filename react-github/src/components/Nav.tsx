@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from 'linaria'
 import { Button } from '@geist-ui/core'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const navigation = css`
   display: flex;
@@ -22,15 +22,29 @@ const navigation = css`
   }
 `
 
+const activeStyle = ({
+  isActive,
+}: {
+  isActive: boolean
+}): { color: 'green' | undefined } => ({
+  color: isActive ? 'green' : undefined,
+})
+
+// TODO: Use polished somewhere here instead?
+
 export default function Nav() {
   return (
     <nav className={navigation}>
       <ul>
         <li>
-          <Link to="/">Popular</Link>
+          <NavLink to="/" style={activeStyle}>
+            Popular
+          </NavLink>
         </li>
         <li>
-          <Link to="/battle">Battle</Link>
+          <NavLink to="/battle" style={activeStyle}>
+            Battle
+          </NavLink>
         </li>
       </ul>
       <Button>Switch Theme</Button>
