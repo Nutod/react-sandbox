@@ -1,11 +1,9 @@
 import React from 'react'
 import queryString from 'query-string'
-import { fetchUser, fetchPosts } from '../utils/api'
+import { useLocation } from 'react-router-dom'
 import Loading from './Loading'
 import { formatDate } from '../utils/helpers'
 import PostsList from './PostsList'
-import { useLocation } from 'react-router-dom'
-import { IPost } from './Post'
 import { useUserDataAndPosts } from '../hooks'
 
 export interface IUser {

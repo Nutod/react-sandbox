@@ -1,11 +1,11 @@
 import React from 'react'
 import queryString from 'query-string'
-import { fetchItem, fetchPosts, fetchComments } from '../utils/api'
 import Loading from './Loading'
 import PostMetaInfo from './PostMetaInfo'
 import Title from './Title'
 import Comment from './Comment'
 import { useLocation } from 'react-router-dom'
+import { usePostsAndComments } from '../hooks'
 
 export interface IPost {
   url: string
@@ -15,46 +15,23 @@ export interface IPost {
   time: number
   text: string
   descendants?: number
-  dead?:boolean
+  dead?: boolean
   deleted?: boolean
   type: 'story' | 'comment'
 }
 
 export default function Post() {
-  const [post, setPost] = React.useState<IPost | null>(null)
-  const [loadingPost, setLoadingPost] = React.useState(true)
-  const [comments, setComments] = React.useState<IPost[] | null>(null)
-  const [loadingComments, setLoadingComments] = React.useState(true)
-  const [error, setError] = React.useState(null)
   const { search } = useLocation()
-
-  React.useEffect(() => {
-    const { id } = queryString.parse(search) as { [id: string]: string }
-
-    fetchItem(id)
-      .then(post => {
-        setPost(post)
-        setLoadingPost(false)
-
-        return fetchComments(post.kids || [])
-      })
-      .then(comments => {
-        setComments(comments)
-        setLoadingComments(false)
-      })
-      .catch(({ message }) => {
-        setError(message)
-        setLoadingPost(false)
-        setLoadingComments(false)
-      })
-  }, [])
+  const { id } = queryString.parse(search) as { [id: string]: string }
+  const { post, loadingPost, comments, loadingComments, error } =
+    usePostsAndComments(id)
 
   if (error) {
     return <p className="center-text error">{error}</p>
   }
 
   if (!post || !comments) {
-    return ""
+    return ''
   }
 
   return (

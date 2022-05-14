@@ -82,7 +82,32 @@ export function useFetchMainPosts(type: string) {
 }
 
 export function usePostsAndComments(id: string) {
-  return {}
+  const [post, setPost] = React.useState<IPost | null>(null)
+  const [loadingPost, setLoadingPost] = React.useState(true)
+  const [comments, setComments] = React.useState<IPost[] | null>(null)
+  const [loadingComments, setLoadingComments] = React.useState(true)
+  const [error, setError] = React.useState(null)
+
+  React.useEffect(() => {
+    fetchItem(id)
+      .then(post => {
+        setPost(post)
+        setLoadingPost(false)
+
+        return fetchComments(post.kids || [])
+      })
+      .then(comments => {
+        setComments(comments)
+        setLoadingComments(false)
+      })
+      .catch(({ message }) => {
+        setError(message)
+        setLoadingPost(false)
+        setLoadingComments(false)
+      })
+  }, [id])
+
+  return { post, loadingPost, comments, loadingComments, error }
 }
 
 export function useUserDataAndPosts(id: string) {
