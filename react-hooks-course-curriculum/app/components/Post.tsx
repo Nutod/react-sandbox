@@ -7,7 +7,7 @@ import Title from './Title'
 import Comment from './Comment'
 import { useLocation } from 'react-router-dom'
 
-export interface Post {
+export interface IPost {
   url: string
   title: string
   id: number
@@ -18,9 +18,9 @@ export interface Post {
 }
 
 export default function Post() {
-  const [post, setPost] = React.useState<Post | null>(null)
+  const [post, setPost] = React.useState<IPost | null>(null)
   const [loadingPost, setLoadingPost] = React.useState(true)
-  const [comments, setComments] = React.useState<Post[] | null>(null)
+  const [comments, setComments] = React.useState<IPost[] | null>(null)
   const [loadingComments, setLoadingComments] = React.useState(true)
   const [error, setError] = React.useState(null)
   const { search } = useLocation()
