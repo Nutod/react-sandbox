@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from 'linaria'
 import { Loading } from '@geist-ui/core'
-import { fetchPopularRepos } from '../api'
+import { fetchPopularRepos, useFetchPopularRepos } from '../api'
 import { IRepo } from '../types'
 
 type Language = 'All' | 'JavaScript' | 'Ruby' | 'Java' | 'CSS' | 'Python'
@@ -64,22 +64,7 @@ function LanguageSelectionNav({
 export default function Popular() {
   const [selectedLanguage, setSelectedLanguage] =
     React.useState<Language>('All')
-  const [repos, setRepos] = React.useState<IRepo[] | null>(null)
-  const [loading, setLoading] = React.useState(true)
-  const [error, setError] = React.useState<null | string>(null)
-
-  React.useEffect(() => {
-    fetchPopularRepos(selectedLanguage)
-      .then(data => {
-        console.log(data)
-        setRepos(data)
-        setLoading(false)
-      })
-      .catch(err => {
-        setError(err)
-        setLoading(false)
-      })
-  }, [])
+  const { repos, loading, error } = useFetchPopularRepos(selectedLanguage)
 
   const getLanguageSelectionNavProps = () => ({
     selectedLanguage,

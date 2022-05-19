@@ -1,3 +1,6 @@
+import React from 'react'
+import { IRepo } from '../types'
+
 const id = 'YOUR_CLIENT_ID'
 const sec = 'YOUR_SECRET_ID'
 const params = `?client_id=${id}&client_secret=${sec}`
@@ -80,4 +83,36 @@ export function fetchPopularRepos(language) {
 
       return data.items
     })
+}
+
+export function useFetchPopularRepos(selectedLanguage: string) {
+  const [repos, setRepos] = React.useState<Record<string, IRepo[]>>({})
+  const [loading, setLoading] = React.useState(true)
+  const [error, setError] = React.useState<null | string>(null)
+
+  React.useEffect(() => {
+    if (repos[selectedLanguage]) return
+
+    setLoading(true)
+
+    fetchPopularRepos(selectedLanguage)
+      .then(data => {
+        console.log(data)
+        setRepos(repos => ({
+          ...repos,
+          [selectedLanguage]: data,
+        }))
+        setLoading(false)
+      })
+      .catch(err => {
+        setError(err)
+        setLoading(false)
+      })
+  }, [selectedLanguage])
+
+  return {
+    repos,
+    loading,
+    error,
+  }
 }
