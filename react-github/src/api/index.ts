@@ -69,7 +69,7 @@ export function battle(players) {
   )
 }
 
-export function fetchPopularRepos(language) {
+export function fetchPopularRepos(language: string) {
   const endpoint = window.encodeURI(
     `https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`
   )
@@ -81,7 +81,7 @@ export function fetchPopularRepos(language) {
         throw new Error(data.message)
       }
 
-      return data.items
+      return data.items as Promise<IRepo[]>
     })
 }
 
@@ -92,6 +92,8 @@ export function useFetchPopularRepos(selectedLanguage: string) {
 
   React.useEffect(() => {
     if (repos[selectedLanguage]) return
+
+    console.log('Fetching new data')
 
     setLoading(true)
 

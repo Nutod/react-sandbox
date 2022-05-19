@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from 'linaria'
-import { Loading } from '@geist-ui/core'
+import { Card, Grid, Link, Loading, Note, Text } from '@geist-ui/core'
 import { fetchPopularRepos, useFetchPopularRepos } from '../api'
 import { IRepo } from '../types'
 
@@ -61,6 +61,38 @@ function LanguageSelectionNav({
   )
 }
 
+type ReposGridProps = {
+  repos: IRepo[] | null
+}
+
+function ReposGrid({ repos }: ReposGridProps) {
+  if (!repos) return null
+
+  return (
+    <Grid.Container gap={1.5}>
+      {repos.map(repo => (
+        <Grid xs={8} justify="center">
+          <Card width="100%">
+            <Text h4 my={0}>
+              {repo.name}
+            </Text>
+            <Text>Modern and minimalist React UI library.</Text>
+            <Card.Footer>
+              <Link
+                color
+                target="_blank"
+                href="https://github.com/geist-org/geist-ui"
+              >
+                Visit source code on GitHub.
+              </Link>
+            </Card.Footer>
+          </Card>
+        </Grid>
+      ))}
+    </Grid.Container>
+  )
+}
+
 export default function Popular() {
   const [selectedLanguage, setSelectedLanguage] =
     React.useState<Language>('All')
@@ -72,17 +104,16 @@ export default function Popular() {
   })
 
   if (error) {
-    return <div>A big error occurred</div>
+    return <Note type="error">Something went wrong</Note>
   }
 
   return (
     <div>
       <LanguageSelectionNav {...getLanguageSelectionNavProps()} />
 
-      {/* List of the data items */}
       {loading && <Loading>Loading</Loading>}
 
-      {!loading && JSON.stringify(repos)}
+      {!loading && <ReposGrid repos={repos[selectedLanguage]} />}
     </div>
   )
 }
