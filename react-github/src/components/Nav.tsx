@@ -31,9 +31,6 @@ const activeStyle = ({
   color: isActive ? '#f81ce5' : undefined,
 })
 
-// TODO: Use polished somewhere here instead?
-// How about customizing the theme altogether?
-
 export default function Nav() {
   const { toggleTheme } = useThemeContext()
 
