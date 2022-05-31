@@ -43,8 +43,8 @@ export default function Nav() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/battle" style={activeStyle}>
-            Battle
+          <NavLink to="/todos" style={activeStyle}>
+            Todos
           </NavLink>
         </li>
       </ul>
