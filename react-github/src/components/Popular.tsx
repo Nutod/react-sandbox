@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from 'linaria'
 import { Card, Grid, Link, Loading, Note, Text } from '@geist-ui/core'
-import { fetchPopularRepos, useFetchPopularRepos } from '../api'
+import { useFetchPopularRepos } from '../api'
 import { IRepo } from '../types'
 
 type Language = 'All' | 'JavaScript' | 'Ruby' | 'Java' | 'CSS' | 'Python'
