@@ -1,14 +1,19 @@
 import React from 'react'
 
-export default function useInput(defaultValue: string) {
-  const [value, setValue] = React.useState(defaultValue)
+export default function useInput(initialValue: string) {
+  const [state, setState] = React.useState(initialValue)
 
-  const updater = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState(e.target.value)
   }
 
   return {
-    value,
-    onChange: updater,
+    state,
+    setState,
+    reset: () => setState(initialValue),
+    bindings: {
+      state,
+      onChange,
+    },
   }
 }
