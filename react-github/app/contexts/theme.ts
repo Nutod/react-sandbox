@@ -6,13 +6,6 @@ const { Consumer, Provider } = React.createContext({})
 export const ThemeConsumer = Consumer
 export const ThemeProvider = Provider
 
-type ThemeContextProps = {
-  theme: 'light' | 'dark'
-  toggleTheme: () => void
-}
-
-const ThemeContext = React.createContext({} as ThemeContextProps)
-
 function useTheme() {
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light')
 

@@ -2,7 +2,7 @@ import React from 'react'
 import './index.css'
 import { ThemeProvider } from './contexts/theme'
 import Nav from './components/Nav'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Loading from './components/Loading'
 
 const Popular = React.lazy(() => import('./components/Popular'))
