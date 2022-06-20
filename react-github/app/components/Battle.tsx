@@ -6,8 +6,7 @@ import {
   FaTimesCircle,
 } from 'react-icons/fa'
 import PropTypes from 'prop-types'
-import Results from './Results'
-import { ThemeConsumer, useThemeContext } from '../contexts/theme'
+import { useThemeContext } from '../contexts/theme'
 import { Link } from 'react-router-dom'
 
 function Instructions() {
@@ -140,7 +139,7 @@ export default function Battle() {
           {playerOne === null ? (
             <PlayerInput
               label="Player One"
-              onSubmit={player => setPlayerOne( player)}
+              onSubmit={player => setPlayerOne(player)}
             />
           ) : (
             <PlayerPreview

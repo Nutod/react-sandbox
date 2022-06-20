@@ -10,6 +10,7 @@ import {
 import Card from './Card'
 import Loading from './Loading'
 import Tooltip from './Tooltip'
+import type { IRepo } from '../types'
 
 type LangaugesNavProps = {
   selected: string
@@ -41,20 +42,6 @@ function LangaugesNav({ selected, onUpdateLanguage }: LangaugesNavProps) {
 LangaugesNav.propTypes = {
   selected: PropTypes.string.isRequired,
   onUpdateLanguage: PropTypes.func.isRequired,
-}
-
-export interface IRepo {
-  name: string
-  owner: IOwner
-  html_url: string
-  stargazers_count: number
-  forks: number
-  open_issues: number
-}
-
-export interface IOwner {
-  login: string
-  avatar_url: string
 }
 
 type ReposGridProps = {
