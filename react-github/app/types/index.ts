@@ -10,9 +10,10 @@ export interface IRepo {
 export interface IOwner {
   login: string
   avatar_url: string
+  html_url: string
 }
 
-export interface IProfile {
+export interface IProfile extends IOwner {
   name: string
   location: string
   company: string
