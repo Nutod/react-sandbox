@@ -11,6 +11,7 @@ import Card from './Card'
 import Loading from './Loading'
 import Tooltip from './Tooltip'
 import type { IRepo } from '../types'
+import { useFetchPopularRepos } from '../hooks/api'
 
 type LangaugesNavProps = {
   selected: string
@@ -98,45 +99,22 @@ ReposGrid.propTypes = {
 
 export default function Popular() {
   const [selectedLanguage, setSelectedLanguage] = React.useState('All')
-  const [repos, setRepos] = React.useState<Record<string, IRepo[]>>({})
-  const [error, setError] = React.useState<string | null>(null)
-
-  React.useEffect(() => {
-    updateLanguage(selectedLanguage)
-  }, [])
+  const { repos, error, loading } = useFetchPopularRepos(selectedLanguage)
 
   const updateLanguage = (selectedLanguage: string) => {
     setSelectedLanguage(selectedLanguage)
-    setError(null)
-
-    if (!repos[selectedLanguage]) {
-      fetchPopularRepos(selectedLanguage)
-        .then(data => {
-          setRepos(repos => ({
-            ...repos,
-            [selectedLanguage]: data,
-          }))
-        })
-        .catch(() => {
-          console.warn('Error fetching repos: ', error)
-
-          setError(`There was an error fetching the repositories.`)
-        })
-    }
   }
 
-  const isLoading = () => {
-    return !repos[selectedLanguage] && error === null
-  }
+  const getLanguagesNavProps = () => ({
+    selected: selectedLanguage,
+    onUpdateLanguage: updateLanguage,
+  })
 
   return (
     <React.Fragment>
-      <LangaugesNav
-        selected={selectedLanguage}
-        onUpdateLanguage={updateLanguage}
-      />
+      <LangaugesNav {...getLanguagesNavProps()} />
 
-      {isLoading() && <Loading text="Fetching Repos" />}
+      {loading && <Loading text="Fetching Repos" />}
 
       {error && <p className="center-text error">{error}</p>}
 
