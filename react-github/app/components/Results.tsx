@@ -1,20 +1,18 @@
 import React from 'react'
-import { battle } from '../utils/api'
 import {
   FaCompass,
   FaBriefcase,
   FaUsers,
   FaUserFriends,
-  FaCode,
   FaUser,
 } from 'react-icons/fa'
 import Card from './Card'
 import PropTypes from 'prop-types'
 import Loading from './Loading'
 import Tooltip from './Tooltip'
-import queryString from 'query-string'
 import { Link, useLocation } from 'react-router-dom'
 import type { IProfile } from '../types'
+import { useFetchResults } from '../hooks/api'
 
 type ProfileListProps = {
   profile: IProfile
@@ -59,35 +57,14 @@ ProfileList.propTypes = {
   profile: PropTypes.object.isRequired,
 }
 
-interface IPlayer {
+export interface IPlayer {
   score: number
   profile: IProfile
 }
 
 export default function Results() {
-  const [winner, setWinner] = React.useState<IPlayer | null>(null)
-  const [loser, setLoser] = React.useState<IPlayer | null>(null)
-  const [error, setError] = React.useState<string | null>(null)
-  const [loading, setLoading] = React.useState(true)
   const { search } = useLocation()
-
-  React.useEffect(() => {
-    const { playerOne, playerTwo } = queryString.parse(search) as {
-      [id: string]: string
-    }
-
-    battle([playerOne, playerTwo])
-      .then(players => {
-        setWinner(players[0])
-        setLoser(players[1])
-        setError(null)
-        setLoading(false)
-      })
-      .catch(({ message }) => {
-        setError(message)
-        setLoading(false)
-      })
-  }, [])
+  const { winner, loser, loading, error } = useFetchResults(search)
 
   if (loading === true || winner === null || loser === null) {
     return <Loading text="Battling" />
