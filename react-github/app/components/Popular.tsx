@@ -9,8 +9,8 @@ import {
 import Card from './Card'
 import Loading from './Loading'
 import Tooltip from './Tooltip'
-import type { IRepo } from '../types'
 import { useFetchPopularRepos } from '../hooks/api'
+import type { IRepo } from '../types'
 
 type LangaugesNavProps = {
   selected: string
